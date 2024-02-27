@@ -46,6 +46,9 @@ class QuizApp:
         texto_entry = tk.Text(self.obs_frame, wrap="word", height=10, width=100)
         texto_entry.pack(padx=10, pady=0)
 
+        # Créditos
+        self.creditos.pack(pady=5, side="bottom")
+
         # Botões
         self.button_frame.pack(pady=20, side="bottom")  # Coloque o frame dos botões na parte inferior
 
@@ -54,7 +57,6 @@ class QuizApp:
 
         self.next_button.pack(side="left", padx=10)
 
-        self.creditos.pack(pady=5, side="bottom")
 
     def next_screen(self):
         if self.aba < 10:
