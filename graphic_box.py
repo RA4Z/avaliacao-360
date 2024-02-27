@@ -9,9 +9,9 @@ class QuizApp:
         self.master.resizable(False, False)  
         self.aba = 1
 
-        self.imagem = tk.PhotoImage(file="Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\BannerAvalia.png")
-        self.imagem_label = tk.Label(self.master, image=self.imagem)
-        self.imagem_label.place(x = 0, y = 0)
+        #self.imagem = tk.PhotoImage(file="Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\BannerAvalia.png")
+        #self.imagem_label = tk.Label(self.master, image=self.imagem)
+        #self.imagem_label.place(x = 0, y = 0)
 
         self.questions = []
         for i in range(len(questionario)):
@@ -27,12 +27,13 @@ class QuizApp:
         self.button_frame = tk.Frame(self.master)
         self.next_button = tk.Button(self.button_frame, text="Próximo", font=("Arial", 12), command=self.next_screen)
 
+        self.creditos = tk.Label(self.master, text="Sistema de Avaliação 360 PCP WEN, desenvolvido por Robert Aron Zimmermann - 2024", font='Helvetica 12 bold',fg='#0078D7', wraplength=1000)
 
         self.create_widgets()
 
     def create_widgets(self):
                 
-        self.title_label.pack(pady=20)
+        self.title_label.pack(pady=10)
 
         # Lista para armazenar as variáveis de controle dos botões de opção de cada pergunta
         self.option_vars = []
@@ -43,7 +44,7 @@ class QuizApp:
         obs_label = tk.Label(self.obs_frame,text='Escreva sua Observação', font=("Arial", 14))
         obs_label.pack()  # Aumento do espaço entre as perguntas
         texto_entry = tk.Text(self.obs_frame, wrap="word", height=10, width=100)
-        texto_entry.pack(padx=10, pady=5)
+        texto_entry.pack(padx=10, pady=0)
 
         # Botões
         self.button_frame.pack(pady=20, side="bottom")  # Coloque o frame dos botões na parte inferior
@@ -52,6 +53,8 @@ class QuizApp:
         prev_button.pack(side="left", padx=10)
 
         self.next_button.pack(side="left", padx=10)
+
+        self.creditos.pack(pady=5, side="bottom")
 
     def next_screen(self):
         if self.aba < 10:
