@@ -5,8 +5,13 @@ class QuizApp:
     def __init__(self, master):
         self.master = master
         self.master.title("Avaliação 360")
-        self.master.geometry("1200x800")
+        self.master.geometry("1384x800")      
+        self.master.resizable(False, False)  
         self.aba = 1
+
+        self.imagem = tk.PhotoImage(file="Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\BannerAvalia.png")
+        self.imagem_label = tk.Label(self.master, image=self.imagem)
+        self.imagem_label.place(x = 0, y = 0)
 
         self.questions = []
         for i in range(len(questionario)):
@@ -18,8 +23,11 @@ class QuizApp:
         self.title_label = tk.Label(self.master, text=f"- - - - - - - - - - - - - - - {self.topico} - - - - - - - - - - - - - - -" +
                                f"\n\n{self.titulo}", font=("Arial", 18), wraplength=1000)
         self.geral_frame = tk.Frame(self.master)
+        self.obs_frame = tk.Frame(self.master)
         self.button_frame = tk.Frame(self.master)
         self.next_button = tk.Button(self.button_frame, text="Próximo", font=("Arial", 12), command=self.next_screen)
+
+
         self.create_widgets()
 
     def create_widgets(self):
@@ -29,7 +37,13 @@ class QuizApp:
         # Lista para armazenar as variáveis de controle dos botões de opção de cada pergunta
         self.option_vars = []
         self.geral_frame.pack()
+
         self.config()
+
+        obs_label = tk.Label(self.obs_frame,text='Escreva sua Observação', font=("Arial", 14))
+        obs_label.pack()  # Aumento do espaço entre as perguntas
+        texto_entry = tk.Text(self.obs_frame, wrap="word", height=10, width=100)
+        texto_entry.pack(padx=10, pady=5)
 
         # Botões
         self.button_frame.pack(pady=20, side="bottom")  # Coloque o frame dos botões na parte inferior
@@ -45,6 +59,7 @@ class QuizApp:
             self.config()
 
         if self.aba == 10:
+            self.obs_frame.pack(pady=20)
             self.next_button.config(text='Finalizar Avaliação',command=self.finalizar_avaliacao)
 
     def prev_screen(self):
@@ -60,6 +75,7 @@ class QuizApp:
         print('Avaliação finalizada!')
 
     def config(self):
+        self.obs_frame.pack_forget()
         self.titulo = topicos_quest[self.aba-1]['titulo']
         self.topico = topicos_quest[self.aba-1]['topico']
         self.next_button.config(text='Próximo', command=self.next_screen)
