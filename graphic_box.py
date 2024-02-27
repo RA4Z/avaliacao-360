@@ -18,6 +18,8 @@ class QuizApp:
         self.title_label = tk.Label(self.master, text=f"- - - - - - - - - - - - - - - {self.topico} - - - - - - - - - - - - - - -" +
                                f"\n\n{self.titulo}", font=("Arial", 18), wraplength=1000)
         self.geral_frame = tk.Frame(self.master)
+        self.button_frame = tk.Frame(self.master)
+        self.next_button = tk.Button(self.button_frame, text="Próximo", font=("Arial", 12), command=self.next_screen)
         self.create_widgets()
 
     def create_widgets(self):
@@ -30,14 +32,12 @@ class QuizApp:
         self.config()
 
         # Botões
-        button_frame = tk.Frame(self.master)
-        button_frame.pack(pady=20, side="bottom")  # Coloque o frame dos botões na parte inferior
+        self.button_frame.pack(pady=20, side="bottom")  # Coloque o frame dos botões na parte inferior
 
-        prev_button = tk.Button(button_frame, text="Anterior", font=("Arial", 12), command=self.prev_screen)
+        prev_button = tk.Button(self.button_frame, text="Anterior", font=("Arial", 12), command=self.prev_screen)
         prev_button.pack(side="left", padx=10)
 
-        next_button = tk.Button(button_frame, text="Próxima", font=("Arial", 12), command=self.next_screen)
-        next_button.pack(side="left", padx=10)
+        self.next_button.pack(side="left", padx=10)
 
     def next_screen(self):
         if self.aba < 10:
@@ -45,16 +45,24 @@ class QuizApp:
             self.config()
 
         if self.aba == 10:
-            print('Fim de perguntas!')
+            self.next_button.config(text='Finalizar Avaliação',command=self.finalizar_avaliacao)
 
     def prev_screen(self):
         if self.aba > 1:
             self.aba = self.aba - 1
             self.config()
 
+    def finalizar_avaliacao(self):
+        for question in questionario:
+            if question['score'] == 0:
+                print(f"A questão {question['numero']} não foi respondida!")
+                return
+        print('Avaliação finalizada!')
+
     def config(self):
         self.titulo = topicos_quest[self.aba-1]['titulo']
         self.topico = topicos_quest[self.aba-1]['topico']
+        self.next_button.config(text='Próximo', command=self.next_screen)
         self.title_label.config(text=f"- - - - - - - - - - - - - - - {self.topico} - - - - - - - - - - - - - - -\n\n{self.titulo}")
         self.questions = []
         for i in range(len(questionario)):
