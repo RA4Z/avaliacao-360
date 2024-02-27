@@ -65,14 +65,14 @@ class QuizApp:
         self.construir_perguntas()
 
     def construir_perguntas(self):
-        for question in self.questions:
+        for index, question in enumerate(self.questions):
             question_label = tk.Label(self.geral_frame,text=question['pergunta'], font=("Arial", 14), wraplength=1000)
             question_label.pack(pady=10)  # Aumento do espaço entre as perguntas
             options_frame = tk.Frame(self.geral_frame)
             options_frame.pack()
 
             # Variável de controle para cada grupo de opções
-            var = tk.StringVar(value="")
+            var = tk.StringVar(value=question['selecionado'])
             self.option_vars.append(var)
 
             options = [
@@ -82,10 +82,25 @@ class QuizApp:
                 question['pontos4'],
             ]
 
-            for option in options:
-                option_button = tk.Radiobutton(options_frame, text=option, value=option, font=("Arial", 10), variable=var, wraplength=250)
+            for i, option in enumerate(options):
+                option_button = tk.Radiobutton(options_frame, text=option, value=option, font=("Arial", 10), variable=var, wraplength=250,
+                                            command=lambda index=index, i=i: self.on_option_selected(index, i))
                 option_button.pack(side="left", padx=10)
 
+    def on_option_selected(self, question_index, option_index):
+        indice = next((index for index, pergunta in enumerate(questionario) if pergunta['numero'] == f"{self.aba}.{question_index + 1}"), None)
+        if option_index == 0: 
+            questionario[indice]['score'] = 10 
+            questionario[indice]['selecionado'] = questionario[indice]['pontos10']
+        if option_index == 1: 
+            questionario[indice]['score'] = 8
+            questionario[indice]['selecionado'] = questionario[indice]['pontos8']
+        if option_index == 2: 
+            questionario[indice]['score'] = 6
+            questionario[indice]['selecionado'] = questionario[indice]['pontos6']
+        if option_index == 3: 
+            questionario[indice]['score'] = 4
+            questionario[indice]['selecionado'] = questionario[indice]['pontos4']
 
 questionario = Questionario.coletar_perguntas()
 topicos_quest = Questionario.coletar_cabecalhos()

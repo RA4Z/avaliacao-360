@@ -30,7 +30,8 @@ class Questionario():
                 'pontos8': pontos8,
                 'pontos6': pontos6,
                 'pontos4': pontos4,
-                'score': 0
+                'score': 0,
+                'selecionado': 0
             })
 
         # Fechar o arquivo após terminar de usar
