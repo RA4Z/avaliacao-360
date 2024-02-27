@@ -1,4 +1,5 @@
 import tkinter as tk
+import keyboard
 from perguntas import Questionario
 
 class QuizApp:
@@ -9,6 +10,7 @@ class QuizApp:
         self.master.resizable(False, False)  
         self.aba = 1
 
+        keyboard.on_press(self.on_key_press)
         #self.imagem = tk.PhotoImage(file="Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\BannerAvalia.png")
         #self.imagem_label = tk.Label(self.master, image=self.imagem)
         #self.imagem_label.place(x = 0, y = 0)
@@ -57,7 +59,6 @@ class QuizApp:
 
         self.next_button.pack(side="left", padx=10)
 
-
     def next_screen(self):
         if self.aba < 10:
             self.aba = self.aba + 1
@@ -79,6 +80,13 @@ class QuizApp:
                 return
         print('Avaliação finalizada!')
 
+    def keypress(event): 
+        print('Algo')
+        if event.keysym == 'RightArrow': 
+            print('Direita')
+        if event.keysym == 'LeftArrow': 
+            print('Esquerda')
+            
     def config(self):
         self.obs_frame.pack_forget()
         self.titulo = topicos_quest[self.aba-1]['titulo']
@@ -130,6 +138,12 @@ class QuizApp:
         if option_index == 3: 
             questionario[indice]['score'] = 4
             questionario[indice]['selecionado'] = questionario[indice]['pontos4']
+
+    def on_key_press(self,event):
+        if event.name == 'right':
+            self.next_screen()
+        if event.name == 'left':
+            self.prev_screen()
 
 questionario = Questionario.coletar_perguntas()
 topicos_quest = Questionario.coletar_cabecalhos()
