@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import keyboard
+from export_result import Exportar
 from perguntas import Questionario
 
 class QuizApp:
@@ -30,6 +31,7 @@ class QuizApp:
         self.button_frame = tk.Frame(self.master)
         self.next_button = tk.Button(self.button_frame, text="Próximo", font=("Arial", 12), command=self.next_screen)
 
+        self.texto_entry = tk.Text(self.obs_frame, wrap="word", height=10, width=100)
         self.creditos = tk.Label(self.master, text="Sistema de Avaliação 360 PCP WEN, desenvolvido por Robert Aron Zimmermann - 2024", font='Helvetica 12 bold',fg='#0078D7', wraplength=1000)
 
         self.create_widgets()
@@ -46,8 +48,7 @@ class QuizApp:
 
         obs_label = tk.Label(self.obs_frame,text='Escreva sua Observação', font=("Arial", 14))
         obs_label.pack()  # Aumento do espaço entre as perguntas
-        texto_entry = tk.Text(self.obs_frame, wrap="word", height=10, width=100)
-        texto_entry.pack(padx=10, pady=0)
+        self.texto_entry.pack(padx=10, pady=0)
 
         # Créditos
         self.creditos.pack(pady=5, side="bottom")
@@ -81,7 +82,12 @@ class QuizApp:
                 return
         result = messagebox.askquestion(title='Finalizar avaliação', message='Tem certeza de que deseja enviar a avaliação?')
         if result == 'yes':
-            messagebox.showwarning(title='Avaliação Enviada', message="Avaliação enviada com sucesso!")
+            try:
+                export = Exportar('ROBERTN','JOSEFJ','Analista Júnior', self.texto_entry.get("1.0", tk.END).replace("\n", ""), questionario)
+                export.export_data()
+                messagebox.showwarning(title='Avaliação Enviada', message="Avaliação enviada com sucesso!")
+            except:
+                messagebox.showerror(title='Erro inesperado', message="Algum erro inesperado ocorreu! Tente novamente mais tarde!")
         else:
             return
 
