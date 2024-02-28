@@ -10,8 +10,8 @@ if len(pendencias) > 0:
         selecionados = Select(pendencias)
         selecionados.exibir()
         if selecionados.selecionado != None:
-            print(selecionados.selecionado)
-            avalia = QuizApp(selecionados.selecionado, username,'Analista Júnior')
+            indice = next((index for index, colab in enumerate(pendencias) if colab['colaborador'] == selecionados.selecionado), None)
+            avalia = QuizApp(selecionados.selecionado, username,pendencias[indice]['cargo'])
             avalia.start()
     except:
         pass

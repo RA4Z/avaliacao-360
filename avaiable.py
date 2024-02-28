@@ -11,7 +11,7 @@ class Select():
         self.lista_nomes = tk.Listbox(self.root)
         self.botao_selecionar = tk.Button(self.root, text="Selecionar", command=self.selecionar_nome)
         for nome in pendencias:
-            self.lista_nomes.insert(tk.END, nome)
+            self.lista_nomes.insert(tk.END, nome['colaborador'])
         self.estilizar_tela()
 
         self.selecionado = None

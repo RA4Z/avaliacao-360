@@ -15,13 +15,13 @@ class Pendentes():
 
         avaliacoes_pendentes = []
 
-        # Percorre as células da coluna 1 e coluna 2
-        for row in sheet.iter_rows(min_row=1, max_col=3, max_row=sheet.max_row):
+        for row in sheet.iter_rows(min_row=1, max_col=5, max_row=sheet.max_row):
             valor_coluna_1 = row[0].value
             valor_coluna_2 = row[1].value
             status_atual = row[2].value
+            cargo = row[4].value
             if valor_coluna_1 == username and (not status_atual):
-                avaliacoes_pendentes.append(valor_coluna_2)
+                avaliacoes_pendentes.append({'colaborador':valor_coluna_2, 'cargo':cargo})
 
         # Fechar o arquivo após terminar de usar
         workbook.close()
