@@ -5,6 +5,7 @@ pendencias = Pendentes.coletar_avaliacoes()
 questionario = Questionario.coletar_perguntas()
 topicos_quest = Questionario.coletar_cabecalhos()
 aba_atual = 8
+
 if len(pendencias) > 0:
     print(f'Escolha algum usuário para avaliar: {pendencias}')  #FAZER ESQUEMA PRA ESCOLHER USUÁRIO
     for topico in topicos_quest:

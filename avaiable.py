@@ -1,0 +1,30 @@
+from avaliadores import Pendentes
+import tkinter as tk
+
+class Select():
+    def __init__(self, pendencias):
+        self.pendencias = pendencias
+        self.root = tk.Tk()
+        self.root.geometry("300x300")      
+        self.root.resizable(False, False)  
+        self.root.title("Selecionar Colaborador")
+
+        self.lista_nomes = tk.Listbox(self.root)
+        self.botao_selecionar = tk.Button(self.root, text="Selecionar", command=self.selecionar_nome)
+        for nome in pendencias:
+            self.lista_nomes.insert(tk.END, nome)
+        self.estilizar_tela()
+
+    def estilizar_tela(self):
+        self.lista_nomes.pack(padx=10, pady=10)
+        self.botao_selecionar.pack(pady=5)
+
+    def selecionar_nome(self):
+        return self.lista_nomes.get(tk.ACTIVE)
+        
+    def exibir(self):
+        self.root.mainloop()
+
+pendencias = Pendentes.coletar_avaliacoes()
+selecionados = Select(pendencias)
+selecionados.exibir()
