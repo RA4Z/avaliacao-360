@@ -3,6 +3,7 @@ from tkinter import messagebox
 import keyboard
 from export_result import Exportar
 from perguntas import Questionario
+from avaliadores import Pendentes
 
 class QuizApp:
     def __init__(self, user_avaliado, user_avaliador, avaliado_cargo):
@@ -92,6 +93,7 @@ class QuizApp:
             try:
                 export = Exportar(self.user_avaliador,self.user_avaliado,self.avaliado_cargo, self.texto_entry.get("1.0", tk.END).replace("\n", ""), questionario)
                 export.export_data()
+                Pendentes.concluir_avaliacao(self.user_avaliador, self.user_avaliado)
                 messagebox.showinfo(title='Avaliação Enviada', message="Avaliação enviada com sucesso!")
                 self.master.destroy()
             except:

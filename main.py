@@ -1,4 +1,5 @@
 from avaliadores import Pendentes
+from tkinter import messagebox
 import getpass
 from graphic_box import QuizApp
 from avaiable import Select
@@ -16,4 +17,4 @@ if len(pendencias) > 0:
     except:
         pass
 else:
-    print('Não há avaliações pendentes para o usuário logado!')
+    messagebox.showinfo(title='Sem Avaliações Pendentes', message="Não há avaliações pendentes para o usuário logado!")
