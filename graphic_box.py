@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 import keyboard
 from perguntas import Questionario
 
@@ -76,9 +77,13 @@ class QuizApp:
     def finalizar_avaliacao(self):
         for question in questionario:
             if question['score'] == 0:
-                print(f"A questão {question['numero']} não foi respondida!")
+                messagebox.showwarning(title='Erro na avaliação', message=f"A questão {question['numero']} não foi respondida!")
                 return
-        print('Avaliação finalizada!')
+        result = messagebox.askquestion(title='Finalizar avaliação', message='Tem certeza de que deseja enviar a avaliação?')
+        if result == 'yes':
+            messagebox.showwarning(title='Avaliação Enviada', message="Avaliação enviada com sucesso!")
+        else:
+            return
 
     def keypress(event): 
         print('Algo')
