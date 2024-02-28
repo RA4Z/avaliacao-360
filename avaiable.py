@@ -1,5 +1,4 @@
 import tkinter as tk
-from avaliadores import Pendentes
 
 class Select():
     def __init__(self, pendencias):
@@ -43,7 +42,3 @@ class Select():
     def exibir(self):
         self.root.mainloop()
         return self.selecionado
-
-pendencias = Pendentes.coletar_avaliacoes('ROBERTN')
-selecionados = Select(pendencias)
-selecionados.exibir()
