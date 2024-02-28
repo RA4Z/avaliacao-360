@@ -1,10 +1,8 @@
 import openpyxl
-import getpass
 import datetime
 
 class Pendentes():
-    def coletar_avaliacoes():
-        username = getpass.getuser().upper()
+    def coletar_avaliacoes(username):
         currentDateTime = datetime.datetime.now()
         date = currentDateTime.date()
         year = date.strftime("%Y")
