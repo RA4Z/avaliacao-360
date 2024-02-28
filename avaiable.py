@@ -1,4 +1,3 @@
-from avaliadores import Pendentes
 import tkinter as tk
 
 class Select():
@@ -15,16 +14,16 @@ class Select():
             self.lista_nomes.insert(tk.END, nome)
         self.estilizar_tela()
 
+        self.selecionado = None
+
     def estilizar_tela(self):
         self.lista_nomes.pack(padx=10, pady=10)
         self.botao_selecionar.pack(pady=5)
 
     def selecionar_nome(self):
-        return self.lista_nomes.get(tk.ACTIVE)
+        self.selecionado = self.lista_nomes.get(tk.ACTIVE)
+        self.root.destroy()
         
     def exibir(self):
         self.root.mainloop()
-
-pendencias = Pendentes.coletar_avaliacoes()
-selecionados = Select(pendencias)
-selecionados.exibir()
+        return self.selecionado

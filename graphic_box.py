@@ -5,12 +5,16 @@ from export_result import Exportar
 from perguntas import Questionario
 
 class QuizApp:
-    def __init__(self, master):
-        self.master = master
+    def __init__(self, user_avaliado, user_avaliador, avaliado_cargo):
+        self.master = tk.Tk()
         self.master.title("Avaliação 360")
         self.master.geometry("1384x800")      
         self.master.resizable(False, False)  
         self.aba = 1
+
+        self.user_avaliado = user_avaliado
+        self.user_avaliador = user_avaliador
+        self.avaliado_cargo = avaliado_cargo
 
         keyboard.on_press(self.on_key_press)
         #self.imagem = tk.PhotoImage(file="Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\BannerAvalia.png")
@@ -35,6 +39,9 @@ class QuizApp:
         self.creditos = tk.Label(self.master, text="Sistema de Avaliação 360 PCP WEN, desenvolvido por Robert Aron Zimmermann - 2024", font='Helvetica 12 bold',fg='#0078D7', wraplength=1000)
 
         self.create_widgets()
+
+    def start(self):
+        self.master.mainloop()
 
     def create_widgets(self):
                 
@@ -83,9 +90,10 @@ class QuizApp:
         result = messagebox.askquestion(title='Finalizar avaliação', message='Tem certeza de que deseja enviar a avaliação?')
         if result == 'yes':
             try:
-                export = Exportar('ROBERTN','JOSEFJ','Analista Júnior', self.texto_entry.get("1.0", tk.END).replace("\n", ""), questionario)
+                export = Exportar(self.user_avaliador,self.user_avaliado,self.avaliado_cargo, self.texto_entry.get("1.0", tk.END).replace("\n", ""), questionario)
                 export.export_data()
-                messagebox.showwarning(title='Avaliação Enviada', message="Avaliação enviada com sucesso!")
+                messagebox.showinfo(title='Avaliação Enviada', message="Avaliação enviada com sucesso!")
+                self.master.destroy()
             except:
                 messagebox.showerror(title='Erro inesperado', message="Algum erro inesperado ocorreu! Tente novamente mais tarde!")
         else:
@@ -158,6 +166,3 @@ class QuizApp:
 
 questionario = Questionario.coletar_perguntas()
 topicos_quest = Questionario.coletar_cabecalhos()
-root = tk.Tk()
-app = QuizApp(root)
-root.mainloop()

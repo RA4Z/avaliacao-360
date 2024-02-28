@@ -8,15 +8,16 @@ class Exportar():
         self.avaliador = avaliador
         self.avaliado = avaliado
         self.cargo = cargo
+        self.obs = str(obs).replace(';',',')
 
-        self.cabecalho = 'Colaborador avaliado,Cargo do colaborador avaliado,Colaborador avaliador,Total Geral,Média Total,Observações,Data/Hora'
-        self.dados = f'{self.avaliado},{self.cargo},{self.avaliador},total,media,{obs},{currentDateTime}'
+        self.cabecalho = 'Colaborador avaliado;Cargo do colaborador avaliado;Colaborador avaliador;Total Geral;Média Total;Observações;Data/Hora'
+        self.dados = f'{self.avaliado};{self.cargo};{self.avaliador};total;media;{self.obs};{currentDateTime}'
 
         for question in questionario:
             self.total = self.total + question['score']
             self.contagem = self.contagem + 1
-            self.cabecalho = self.cabecalho + f",{str(question['numero'])}"
-            self.dados = self.dados + f",{str(question['score'])}"
+            self.cabecalho = self.cabecalho + f";{str(question['numero'])}"
+            self.dados = self.dados + f";{str(question['score'])}"
         self.media = self.total / self.contagem
 
         self.dados = self.dados.replace('media',str(self.media))
