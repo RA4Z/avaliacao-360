@@ -143,6 +143,7 @@ class QuizApp:
             self.config()
 
         if self.aba == 10:
+            self.atualizar_grafico()
             self.obs_frame.pack(pady=20)
             self.canvas.get_tk_widget().pack() 
             self.next_button.config(text='Finalizar Avaliação',command=self.finalizar_avaliacao)
