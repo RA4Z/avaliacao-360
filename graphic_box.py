@@ -8,7 +8,7 @@ from avaliadores import Pendentes
 class QuizApp:
     def __init__(self, user_avaliado, user_avaliador, avaliado_cargo):
         self.master = tk.Tk()
-        self.master.title("Avaliação 360")
+        self.master.title(f"Avaliação 360 - Avaliando {user_avaliado} de cargo {avaliado_cargo}")
         self.master.geometry("1384x800")      
         self.master.resizable(False, False)  
         self.aba = 1
@@ -16,6 +16,10 @@ class QuizApp:
         self.user_avaliado = user_avaliado
         self.user_avaliador = user_avaliador
         self.avaliado_cargo = avaliado_cargo
+
+        self.imagem = tk.PhotoImage(file=f"Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\{self.user_avaliado}.png")
+        self.imagem_label = tk.Label(self.master, image=self.imagem)
+        self.imagem_label.config(width=150, height=150)
 
         keyboard.on_press(self.on_key_press)
         #self.imagem = tk.PhotoImage(file="Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\BannerAvalia.png")
@@ -30,7 +34,7 @@ class QuizApp:
         self.titulo = topicos_quest[self.aba-1]['titulo']
         self.topico = topicos_quest[self.aba-1]['topico']
         self.title_label = tk.Label(self.master, text=f"- - - - - - - - - - - - - - - {self.topico} - - - - - - - - - - - - - - -" +
-                               f"\n\n{self.titulo}", font=("Arial", 18), wraplength=1000)
+                               f"\n\n{self.titulo}", font=("Arial", 18), wraplength=900)
         self.geral_frame = tk.Frame(self.master)
         self.obs_frame = tk.Frame(self.master)
         self.button_frame = tk.Frame(self.master)
@@ -45,9 +49,9 @@ class QuizApp:
         self.master.mainloop()
 
     def create_widgets(self):
-                
+        self.imagem_label.place(x=0,y=0)  
+        #self.imagem_label.pack(side='right')
         self.title_label.pack(pady=10)
-
         # Lista para armazenar as variáveis de controle dos botões de opção de cada pergunta
         self.option_vars = []
         self.geral_frame.pack()
