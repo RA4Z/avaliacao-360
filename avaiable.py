@@ -4,14 +4,14 @@ class Select():
     def __init__(self, pendencias):
         self.pendencias = pendencias
         self.root = tk.Tk()
-        self.root.geometry("300x400")      
+        self.root.geometry("350x450")      
         self.root.resizable(False, False)  
         self.root.title("Selecionar Colaborador")
 
         self.imagem = tk.PhotoImage(file="Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\USER.png")
         self.imagem_label = tk.Label(self.root, image=self.imagem)
         self.imagem_label.config(width=150, height=150)
-
+        self.title_label = tk.Label(self.root, text="Selecione um colaborador para Avaliar...", font=("Arial", 15), wraplength=300)
         self.lista_nomes = tk.Listbox(self.root)
         self.lista_nomes.bind("<<ListboxSelect>>", self.trocar_imagem)
 
@@ -31,6 +31,7 @@ class Select():
         self.imagem_label.config(image=self.imagem)
 
     def estilizar_tela(self):
+        self.title_label.pack()
         self.lista_nomes.pack(padx=10, pady=10)
         self.botao_selecionar.pack(pady=5)
         self.imagem_label.pack()
