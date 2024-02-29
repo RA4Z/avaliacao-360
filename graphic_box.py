@@ -68,6 +68,10 @@ class QuizApp:
         self.ax.set_ylabel('Média')
         self.ax.set_title('Resumo Avaliação')
 
+        # Adicionar o texto da dica de ferramenta
+        self.texto_tooltip = self.ax.text(0, 0, '', alpha=0.0)
+        self.fig.canvas.mpl_connect('motion_notify_event', self.hover)
+
         # Adicionar o gráfico à interface Tkinter
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.master)
         self.canvas.draw()
@@ -93,6 +97,20 @@ class QuizApp:
         # Atualizar o gráfico
         self.canvas.draw()
         
+    def hover(self, event):
+        if event.inaxes == self.ax:
+            for index, bar in enumerate(self.bars):
+                if bar.contains(event)[0]:
+                    x = bar.get_x() + bar.get_width() / 2
+                    y = bar.get_height()
+                    self.texto_tooltip.set_text(f'Média: {y:.2f}, {topicos_quest[index]["titulo"][0:40]}...')
+                    self.texto_tooltip.set_position((x, y))
+                    self.texto_tooltip.set_alpha(1.0)
+                    self.canvas.draw_idle()
+                    return
+        self.texto_tooltip.set_alpha(0.0)
+        self.canvas.draw_idle()
+
     def create_widgets(self):
         self.imagem_label.place(x=0, y=0)  
         self.texto_status.place(x=0, y=150)
