@@ -61,23 +61,20 @@ class QuizApp:
         self.x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         self.y = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-        # Criar o gráfico
+        # Criar o gráfico de barras
         self.fig, self.ax = plt.subplots()
-        self.line, = self.ax.plot(self.x, self.y)
+        self.bars = self.ax.bar(self.x, self.y)  # Usar a função bar() para criar as barras
         self.ax.set_xlabel('Módulos')
         self.ax.set_ylabel('Média')
         self.ax.set_title('Resumo Avaliação')
 
-        # Adicionando o gráfico à interface Tkinter
+        # Adicionar o gráfico à interface Tkinter
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.master)
         self.canvas.draw()
-
-        self.line.set_ydata([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        self.canvas.draw()
+        self.canvas.get_tk_widget().pack()
 
     def atualizar_grafico(self):
         # Atualizar os dados do gráfico
-        print('aqui')
         for number in range(len(self.y)):
             soma_grafico = 0
             contagem = 0
@@ -89,8 +86,11 @@ class QuizApp:
                 self.y[number] = soma_grafico / contagem
             else:
                 self.y[number] = 0  
+        # Atualizar as alturas das barras
+        for bar, height in zip(self.bars, self.y):
+            bar.set_height(height)
+
         # Atualizar o gráfico
-        self.line.set_ydata(self.y)
         self.canvas.draw()
         
     def create_widgets(self):
