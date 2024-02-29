@@ -4,6 +4,8 @@ import keyboard
 from export_result import Exportar
 from perguntas import Questionario
 from avaliadores import Pendentes
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
 
 class QuizApp:
     def __init__(self, user_avaliado, user_avaliador, avaliado_cargo):
@@ -15,6 +17,7 @@ class QuizApp:
 
         self.total = 0
 
+        self.plot_grafico()
         self.user_avaliado = user_avaliado
         self.user_avaliador = user_avaliador
         self.avaliado_cargo = avaliado_cargo
@@ -46,7 +49,7 @@ class QuizApp:
         self.button_frame = tk.Frame(self.master)
         self.next_button = tk.Button(self.button_frame, text="Próximo", font=("Arial", 12), command=self.next_screen)
 
-        self.texto_entry = tk.Text(self.obs_frame, wrap="word", height=10, width=100)
+        self.texto_entry = tk.Text(self.obs_frame, wrap="word", height=5, width=100)
         self.creditos = tk.Label(self.master, text="Sistema de Avaliação 360 PCP WEN, desenvolvido por Robert Aron Zimmermann - 2024", font='Helvetica 12 bold',fg='#0078D7', wraplength=1000)
 
         self.create_widgets()
@@ -54,6 +57,42 @@ class QuizApp:
     def start(self):
         self.master.mainloop()
 
+    def plot_grafico(self):
+        self.x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        self.y = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+        # Criar o gráfico
+        self.fig, self.ax = plt.subplots()
+        self.line, = self.ax.plot(self.x, self.y)
+        self.ax.set_xlabel('Módulos')
+        self.ax.set_ylabel('Média')
+        self.ax.set_title('Resumo Avaliação')
+
+        # Adicionando o gráfico à interface Tkinter
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self.master)
+        self.canvas.draw()
+
+        self.line.set_ydata([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        self.canvas.draw()
+
+    def atualizar_grafico(self):
+        # Atualizar os dados do gráfico
+        print('aqui')
+        for number in range(len(self.y)):
+            soma_grafico = 0
+            contagem = 0
+            for i in range(len(questionario)):
+                if float(questionario[i]['numero']) > number + 1 and float(questionario[i]['numero']) < number + 2:
+                    soma_grafico += questionario[i]['score']
+                    contagem += 1
+            if contagem != 0:  
+                self.y[number] = soma_grafico / contagem
+            else:
+                self.y[number] = 0  
+        # Atualizar o gráfico
+        self.line.set_ydata(self.y)
+        self.canvas.draw()
+        
     def create_widgets(self):
         self.imagem_label.place(x=0, y=0)  
         self.texto_status.place(x=0, y=150)
@@ -87,6 +126,7 @@ class QuizApp:
 
         if self.aba == 10:
             self.obs_frame.pack(pady=20)
+            self.canvas.get_tk_widget().pack() 
             self.next_button.config(text='Finalizar Avaliação',command=self.finalizar_avaliacao)
 
     def prev_screen(self):
@@ -121,6 +161,7 @@ class QuizApp:
             
     def config(self):
         self.obs_frame.pack_forget()
+        self.canvas.get_tk_widget().pack_forget()
         self.titulo = topicos_quest[self.aba-1]['titulo']
         self.topico = topicos_quest[self.aba-1]['topico']
         self.next_button.config(text='Próximo', command=self.next_screen)
@@ -174,6 +215,7 @@ class QuizApp:
         for question in questionario:
             self.total = self.total + question['score']
         self.texto_status.config(text=f'Total: {self.total}\n Média: {round(self.total/len(questionario),2)}')
+        self.atualizar_grafico()
 
     def on_key_press(self,event):
         if event.name == 'right':

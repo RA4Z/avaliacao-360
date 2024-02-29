@@ -14,7 +14,7 @@ if len(pendencias) > 0:
             indice = next((index for index, colab in enumerate(pendencias) if colab['colaborador'] == selecionados.selecionado), None)
             avalia = QuizApp(selecionados.selecionado, username,pendencias[indice]['cargo'])
             avalia.start()
-    except:
-        pass
+    except ValueError as e:
+        print('error', e) 
 else:
     messagebox.showinfo(title='Sem Avaliações Pendentes', message="Não há avaliações pendentes para o usuário logado!")
