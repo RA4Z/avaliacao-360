@@ -13,6 +13,8 @@ class QuizApp:
         self.master.resizable(False, False)  
         self.aba = 1
 
+        self.total = 0
+
         self.user_avaliado = user_avaliado
         self.user_avaliador = user_avaliador
         self.avaliado_cargo = avaliado_cargo
@@ -21,6 +23,7 @@ class QuizApp:
         except:
             self.imagem = tk.PhotoImage(file=f"Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\USER.png")
 
+        self.texto_status = tk.Label(self.master, text='Total: 0\n Média: 0.0', font=("Arial", 10))
         self.imagem_label = tk.Label(self.master, image=self.imagem)
         self.imagem_label.config(width=150, height=150)
 
@@ -52,10 +55,11 @@ class QuizApp:
         self.master.mainloop()
 
     def create_widgets(self):
-        self.imagem_label.place(x=0,y=0)  
-        #self.imagem_label.pack(side='right')
+        self.imagem_label.place(x=0, y=0)  
+        self.texto_status.place(x=0, y=150)
+
         self.title_label.pack(pady=10)
-        # Lista para armazenar as variáveis de controle dos botões de opção de cada pergunta
+        
         self.option_vars = []
         self.geral_frame.pack()
 
@@ -166,6 +170,10 @@ class QuizApp:
         if option_index == 3: 
             questionario[indice]['score'] = 4
             questionario[indice]['selecionado'] = questionario[indice]['pontos4']
+        self.total = 0
+        for question in questionario:
+            self.total = self.total + question['score']
+        self.texto_status.config(text=f'Total: {self.total}\n Média: {round(self.total/len(questionario),2)}')
 
     def on_key_press(self,event):
         if event.name == 'right':
