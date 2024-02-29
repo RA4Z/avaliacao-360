@@ -16,8 +16,11 @@ class QuizApp:
         self.user_avaliado = user_avaliado
         self.user_avaliador = user_avaliador
         self.avaliado_cargo = avaliado_cargo
+        try:
+            self.imagem = tk.PhotoImage(file=f"Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\{self.user_avaliado}.png")
+        except:
+            self.imagem = tk.PhotoImage(file=f"Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\USER.png")
 
-        self.imagem = tk.PhotoImage(file=f"Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\{self.user_avaliado}.png")
         self.imagem_label = tk.Label(self.master, image=self.imagem)
         self.imagem_label.config(width=150, height=150)
 
