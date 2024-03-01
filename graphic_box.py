@@ -49,11 +49,19 @@ class QuizApp:
 
         self.guias_disponiveis = tk.Label(self.master, text=self.guias, font='Helvetica 12 bold',fg='#0078D7')
         self.guias_disponiveis.bind("<Button-1>", self.clique_na_lista)
+        self.guias_disponiveis.bind("<Enter>", self.mudar_cursor)
+        self.guias_disponiveis.bind("<Leave>", self.restaurar_cursor)
 
         self.texto_entry = tk.Text(self.obs_frame, wrap="word", height=5, width=100)
         self.creditos = tk.Label(self.master, text="Sistema de Avaliação 360 PCP WEN, desenvolvido por Robert Aron Zimmermann - 2024", font='Helvetica 12 bold',fg='#0078D7', wraplength=1000)
 
         self.create_widgets()
+
+    def mudar_cursor(self, event):
+        self.guias_disponiveis.config(cursor="hand2")
+
+    def restaurar_cursor(self, event):
+        self.guias_disponiveis.config(cursor="")
 
     def clique_na_lista(self, event):
         texto_completo = self.guias_disponiveis.cget("text")
