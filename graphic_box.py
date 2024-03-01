@@ -16,6 +16,7 @@ class QuizApp:
         self.aba = 1
 
         self.total = 0
+        self.guias = ['|1.0|','2.0','3.0','4.0','5.0','6.0','7.0','8.0','9.0','10.0']
 
         self.plot_grafico()
         self.user_avaliado = user_avaliado
@@ -31,9 +32,6 @@ class QuizApp:
         self.imagem_label.config(width=150, height=150)
 
         keyboard.on_press(self.on_key_press)
-        #self.imagem = tk.PhotoImage(file="Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\BannerAvalia.png")
-        #self.imagem_label = tk.Label(self.master, image=self.imagem)
-        #self.imagem_label.place(x = 0, y = 0)
 
         self.questions = []
         for i in range(len(questionario)):
@@ -49,6 +47,7 @@ class QuizApp:
         self.button_frame = tk.Frame(self.master)
         self.next_button = tk.Button(self.button_frame, text="Próximo", font=("Arial", 12), command=self.next_screen)
 
+        self.guias_disponiveis = tk.Label(self.master, text=self.guias, font='Helvetica 12 bold',fg='#0078D7')
         self.texto_entry = tk.Text(self.obs_frame, wrap="word", height=5, width=100)
         self.creditos = tk.Label(self.master, text="Sistema de Avaliação 360 PCP WEN, desenvolvido por Robert Aron Zimmermann - 2024", font='Helvetica 12 bold',fg='#0078D7', wraplength=1000)
 
@@ -114,6 +113,7 @@ class QuizApp:
     def create_widgets(self):
         self.imagem_label.place(x=0, y=0)  
         self.texto_status.place(x=0, y=150)
+        self.guias_disponiveis.place(x=1050,y=0)
 
         self.title_label.pack(pady=10)
         
@@ -186,9 +186,17 @@ class QuizApp:
         self.next_button.config(text='Próximo', command=self.next_screen)
         self.title_label.config(text=f"- - - - - - - - - - - - - - - {self.topico} - - - - - - - - - - - - - - -\n\n{self.titulo}")
         self.questions = []
+
+        for i in range(len(self.guias)):
+            if i == self.aba - 1:
+                self.guias[i] = f'|{self.aba}.0|'
+            else:
+                self.guias[i] = self.guias[i].replace('|','')
+
         for i in range(len(questionario)):
             if float(questionario[i]['numero']) > self.aba and float(questionario[i]['numero']) < self.aba + 1:
                 self.questions.append(questionario[i])
+        self.guias_disponiveis.config(text=self.guias)
         for widget in self.geral_frame.winfo_children():
             widget.destroy()
         self.construir_perguntas()
