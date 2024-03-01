@@ -48,10 +48,33 @@ class QuizApp:
         self.next_button = tk.Button(self.button_frame, text="Próximo", font=("Arial", 12), command=self.next_screen)
 
         self.guias_disponiveis = tk.Label(self.master, text=self.guias, font='Helvetica 12 bold',fg='#0078D7')
+        self.guias_disponiveis.bind("<Button-1>", self.clique_na_lista)
+
         self.texto_entry = tk.Text(self.obs_frame, wrap="word", height=5, width=100)
         self.creditos = tk.Label(self.master, text="Sistema de Avaliação 360 PCP WEN, desenvolvido por Robert Aron Zimmermann - 2024", font='Helvetica 12 bold',fg='#0078D7', wraplength=1000)
 
         self.create_widgets()
+
+    def clique_na_lista(self, event):
+        texto_completo = self.guias_disponiveis.cget("text")
+        x = event.x
+        y = event.y
+        indice = self.get_char_index(texto_completo, x, y)
+        linha_clicada = texto_completo.count('.0', 0, indice) + 1
+        item_clicado = int(str(texto_completo.split('.0')[linha_clicada - 1]).replace('|','').strip())
+        self.aba = item_clicado
+        self.config()
+        if self.aba == 10:
+            self.atualizar_grafico()
+            self.obs_frame.pack(pady=20)
+            self.canvas.get_tk_widget().pack() 
+            self.next_button.config(text='Finalizar Avaliação',command=self.finalizar_avaliacao)
+
+    def get_char_index(self, text, x, y):
+        width = self.guias_disponiveis.winfo_width()
+        height = self.guias_disponiveis.winfo_height()
+        indice = int((x / width) * len(text))
+        return min(indice, len(text)-1)
 
     def start(self):
         self.master.mainloop()
