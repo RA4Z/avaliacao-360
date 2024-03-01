@@ -102,7 +102,7 @@ class QuizApp:
                 if bar.contains(event)[0]:
                     x = bar.get_x() + bar.get_width() / 2
                     y = bar.get_height()
-                    self.texto_tooltip.set_text(f'Média: {y:.2f}, {topicos_quest[index]["titulo"][0:40]}...')
+                    self.texto_tooltip.set_text(f'Média: {y:.2f}, Aba: {index + 1}')
                     self.texto_tooltip.set_position((x, y))
                     self.texto_tooltip.set_alpha(1.0)
                     self.canvas.draw_idle()
