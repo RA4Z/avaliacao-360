@@ -20,7 +20,8 @@ def main():
         except ValueError as e:
             print('error', e)
     else:
-        messagebox.showinfo(title='Sem Avaliações Pendentes', message="Não há avaliações pendentes para o usuário logado!")
+        messagebox.showinfo(title='Sem Avaliações Pendentes', message="Não há avaliações pendentes para o usuário "
+                                                                      "logado!")
 
 
 if __name__ == "__main__":
