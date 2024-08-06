@@ -196,6 +196,11 @@ class QuizApp:
                 messagebox.showwarning(title='Erro na avaliação',
                                        message=f"A questão {question['numero']} não foi respondida!")
                 return
+        if self.texto_entry.get("1.0", tk.END).replace("\n", "").strip() == '':
+            messagebox.showwarning(title='Erro na avaliação',
+                                   message=f"O campo observação não pode estar em branco!")
+            return
+
         result = messagebox.askquestion(title='Finalizar avaliação',
                                         message='Tem certeza de que deseja enviar a avaliação?')
         if result == 'yes':
