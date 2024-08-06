@@ -8,7 +8,8 @@ class Questionario():
         year = date.strftime("%Y")
 
         # Abre o arquivo Excel
-        workbook = openpyxl.load_workbook(f'Q:\GROUPS\BR_SC_JGS_WM_LOGISTICA\PCP\Robert\Vários\Avaliação\Avaliação {year}\Perguntas e Respostas.xlsx')
+        workbook = openpyxl.load_workbook(f'Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação'
+                                          f'\\Avaliação {year}\\Perguntas e Respostas.xlsx')
 
         # Seleciona a planilha desejada
         sheet = workbook['Perguntas']
@@ -36,9 +37,9 @@ class Questionario():
 
         # Fechar o arquivo após terminar de usar
         workbook.close()
-        
+
         return perguntas
-    
+
     def coletar_cabecalhos():
         currentDateTime = datetime.datetime.now()
         date = currentDateTime.date()
@@ -65,6 +66,6 @@ class Questionario():
 
         # Fechar o arquivo após terminar de usar
         workbook.close()
-        
+
         return titulos
 

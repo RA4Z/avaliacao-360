@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class Select():
+class Select:
     def __init__(self, pendencias):
         self.pendencias = pendencias
         self.root = tk.Tk()
@@ -8,7 +8,8 @@ class Select():
         self.root.resizable(False, False)  
         self.root.title("Selecionar Colaborador")
 
-        self.imagem = tk.PhotoImage(file="Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\USER.png")
+        self.imagem = tk.PhotoImage(file="Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens"
+                                         "\\Colaboradores\\USER.png")
         self.imagem_label = tk.Label(self.root, image=self.imagem)
         self.imagem_label.config(width=150, height=150)
         self.title_label = tk.Label(self.root, text="Selecione um colaborador para Avaliar...", font=("Arial", 15), wraplength=300)
@@ -25,9 +26,11 @@ class Select():
     def trocar_imagem(self, event):
         try:
             nome_selecionado = self.lista_nomes.get(tk.ACTIVE)
-            self.imagem = tk.PhotoImage(file=f"Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\{nome_selecionado}.png")
+            self.imagem = tk.PhotoImage(file=f"Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação"
+                                             f"\\Imagens\\Colaboradores\\{nome_selecionado}.png")
         except:
-            self.imagem = tk.PhotoImage(file="Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação\\Imagens\\Colaboradores\\USER.png")
+            self.imagem = tk.PhotoImage(file="Q:\\GROUPS\\BR_SC_JGS_WM_LOGISTICA\\PCP\\Robert\\Vários\\Avaliação"
+                                             "\\Imagens\\Colaboradores\\USER.png")
         self.imagem_label.config(image=self.imagem)
 
     def estilizar_tela(self):

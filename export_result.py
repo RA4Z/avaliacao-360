@@ -1,6 +1,7 @@
 import datetime
 
-class Exportar():
+
+class Exportar:
     def __init__(self, avaliador, avaliado, cargo, obs, questionario):
         self.total = 0
         self.contagem = 0
@@ -8,9 +9,10 @@ class Exportar():
         self.avaliador = avaliador
         self.avaliado = avaliado
         self.cargo = cargo
-        self.obs = str(obs).replace(';',',')
+        self.obs = str(obs).replace(';', ',')
 
-        self.cabecalho = 'Colaborador avaliado;Cargo do colaborador avaliado;Colaborador avaliador;Total Geral;Média Total;Observações;Data/Hora'
+        self.cabecalho = ('Colaborador avaliado;Cargo do colaborador avaliado;Colaborador avaliador;Total Geral;Média '
+                          'Total;Observações;Data/Hora')
         self.dados = f'{self.avaliado};{self.cargo};{self.avaliador};total;media;{self.obs};{currentDateTime}'
 
         for question in questionario:
@@ -20,9 +22,8 @@ class Exportar():
             self.dados = self.dados + f";{str(question['score'])}"
         self.media = self.total / self.contagem
 
-        self.dados = self.dados.replace('media',str(self.media))
-        self.dados = self.dados.replace('total',str(self.total))
-
+        self.dados = self.dados.replace('media', str(self.media))
+        self.dados = self.dados.replace('total', str(self.total))
 
     def export_data(self):
         with open(caminho + self.avaliador + '_avaliando_' + self.avaliado + '.txt', 'w') as f:
